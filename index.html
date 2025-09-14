@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Elsewedy Electric | Virtual Tour</title>
+<meta charset="utf-8">
+<meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
+
+<!-- Google Fonts: Cairo -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome - For Premium Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+  @-ms-viewport { width: device-width; }
+
+  /* -- Million Dollar Look & Feel -- */
+  :root {
+    --brand-dark-blue: #0a192f;
+    --brand-light-blue: #172a45;
+    --brand-gold: #FFD700;
+    --brand-cyan: #64ffda;
+    --brand-text-light: #ccd6f6;
+    --brand-text-dark: #8892b0;
+    --font-main: 'Cairo', sans-serif;
+  }
+
+  /* Basic Reset */
+  html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;
+  }
+  article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+  body { line-height: 1; }
+  ol, ul { list-style: none; }
+  blockquote, q { quotes: none; }
+  blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+  table { border-collapse: collapse; border-spacing: 0; }
+  
+  /* Main Styles */
+  * {
+    -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;
+    -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none;
+    -ms-text-size-adjust: none; -moz-text-size-adjust: none; -webkit-text-size-adjust: none; text-size-adjust: none;
+    -webkit-user-drag: none; -webkit-touch-callout: none; -ms-content-zooming: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+  }
+
+  html, body {
+    width: 100%; height: 100%; padding: 0; margin: 0; overflow: hidden;
+    font-family: var(--font-main);
+    font-size: 16px;
+    background-color: var(--brand-dark-blue);
+    color: var(--brand-text-light);
+  }
+
+  a, a:hover, a:active, a:visited { text-decoration: none; color: inherit; }
+
+  /* Preloader */
+  /* -- Logos Styling -- */
+#company-logo {
+  position: absolute;
+  top: 20px;
+  left: 80px; /* Space for the menu button */
+  z-index: 1000;
+  height: 44px;
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+#company-logo img {
+  height: 100%;
+  width: auto;
+}
+#company-logo:hover {
+  filter: brightness(1.2);
+  transform: scale(1.05);
+}
+.mobile #company-logo { left: 70px; height: 40px; }
+
+  #preloader {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: var(--brand-dark-blue); z-index: 99999;
+    display: flex; justify-content: center; align-items: center; flex-direction: column;
+    transition: opacity 0.5s ease;
+  }
+  #preloader .loader {
+    border: 8px solid var(--brand-light-blue); border-top: 8px solid var(--brand-gold);
+    border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite;
+  }
+  #preloader p { color: var(--brand-text-light); margin-top: 20px; font-size: 1.2em; }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+  #pano { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
+
+  #creator-credit {
+  position: absolute;
+  bottom: 25px;
+  right: 80px; /* Space for the music button */
+  z-index: 1000;
+  color: var(--brand-text-dark);
+  font-size: 14px;
+  opacity: 0.7;
+  transition: opacity 0.3s, color 0.3s;
+}
+#creator-credit:hover {
+  opacity: 1;
+  color: var(--brand-cyan);
+}
+  /* UI Controls */
+  .ui-button {
+    position: absolute; width: 44px; height: 44px; background-color: rgba(23, 42, 69, 0.8);
+    border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    cursor: pointer; transition: background-color 0.3s ease, transform 0.3s ease;
+    font-size: 18px; color: var(--brand-text-light);
+  }
+  .ui-button:hover { background-color: var(--brand-gold); color: var(--brand-dark-blue); transform: scale(1.1); }
+  .mobile .ui-button { width: 50px; height: 50px; font-size: 22px; }
+
+  #titleBar {
+    position: absolute; top: 20px; left: 50%; transform: translateX(-50%); height: 44px;
+    background-color: rgba(23, 42, 69, 0.8); border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 22px; padding: 0 25px; display: flex; align-items: center; justify-content: center;
+  }
+  #titleBar .sceneName { line-height: 44px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  #autorotateToggle { top: 20px; right: 20px; }
+  #fullscreenToggle { top: 20px; right: 74px; display: none; }
+  body.fullscreen-enabled #fullscreenToggle { display: flex; }
+  #sceneListToggle { top: 20px; left: 20px; }
+  body.single-scene #sceneListToggle { display: none; }
+
+  /* Scene List */
+  #sceneList {
+    position: absolute; top: 0; left: -300px; width: 300px; height: 100%;
+    background-color: var(--brand-light-blue); box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+    transition: left 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    overflow-y: auto; padding-top: 80px;
+  }
+  #sceneList.enabled { left: 0; }
+  .mobile #sceneList { width: 100%; left: -100%; }
+  .mobile #sceneList.enabled { left: 0; }
+  #sceneList .scene { display: block; color: var(--brand-text-dark); }
+  #sceneList .scene .text {
+    padding: 15px 25px; font-size: 1.1em; border-bottom: 1px solid var(--brand-dark-blue);
+    transition: background-color 0.3s, color 0.3s, padding-left 0.3s;
+  }
+  .no-touch #sceneList .scene:hover .text { background-color: var(--brand-gold); color: var(--brand-dark-blue); padding-left: 35px; }
+  #sceneList .scene.current .text { background-color: var(--brand-dark-blue); color: var(--brand-gold); font-weight: 700; }
+
+  /* -- NEW: Universal Hotspot Style -- */
+  .hotspot .icon-wrapper {
+    width: 100%; height: 100%; border-radius: 50%;
+    color: white; display: flex; justify-content: center; align-items: center;
+    font-size: 28px; transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  .no-touch .hotspot:hover .icon-wrapper { transform: scale(1.2); animation: none; }
+
+  /* -- UPDATED: Beautiful Link Hotspot -- */
+  .link-hotspot { width: 60px; height: 60px; margin-left: -30px; margin-top: -30px; cursor: pointer; }
+  .link-hotspot .icon-wrapper { background-color: rgba(255, 215, 0, 0.7); animation: pulse-gold 2s infinite; }
+  .no-touch .link-hotspot:hover .icon-wrapper { background-color: rgba(255, 215, 0, 1); }
+  @keyframes pulse-gold {
+    0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+    70% { box-shadow: 0 0 0 20px rgba(255, 215, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+  }
+  .link-hotspot-tooltip {
+    position: absolute; left: 50%; top: 110%; transform: translateX(-50%);
+    background-color: var(--brand-light-blue); color: var(--brand-gold);
+    padding: 8px 15px; border-radius: 5px; white-space: nowrap;
+    opacity: 0; visibility: hidden; transition: opacity 0.3s, top 0.3s;
+  }
+  .no-touch .link-hotspot:hover .link-hotspot-tooltip { opacity: 1; visibility: visible; top: 120%; }
+
+  /* -- NEW: Info Hotspot Icon Style -- */
+  .info-hotspot { width: 50px; height: 50px; margin-left: -25px; margin-top: -25px; cursor: pointer; }
+  .info-hotspot .icon-wrapper { background-color: rgba(100, 255, 218, 0.7); animation: pulse-cyan 2s infinite; font-size: 24px; }
+  .no-touch .info-hotspot:hover .icon-wrapper { background-color: rgba(100, 255, 218, 1); }
+  @keyframes pulse-cyan {
+    0% { box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.7); }
+    70% { box-shadow: 0 0 0 20px rgba(100, 255, 218, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(100, 255, 218, 0); }
+  }
+
+  /* -- NEW: Professional Info Modal -- */
+  #info-modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(10, 25, 47, 0.85); z-index: 10000;
+    display: none; justify-content: center; align-items: center;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease;
+  }
+  #info-modal-content {
+    background: var(--brand-light-blue); padding: 30px 40px; border-radius: 8px;
+    max-width: 500px; width: 90%; position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-top: 3px solid var(--brand-cyan);
+  }
+  #info-modal-title {
+    font-size: 1.8em; color: var(--brand-text-light); margin-bottom: 15px; font-weight: 700;
+  }
+  #info-modal-text {
+    font-size: 1.1em; color: var(--brand-text-dark); line-height: 1.6;
+  }
+  #info-modal-close {
+    position: absolute; top: 15px; right: 15px; font-size: 24px;
+    color: var(--brand-text-dark); cursor: pointer; transition: color 0.3s, transform 0.3s;
+  }
+  #info-modal-close:hover { color: var(--brand-cyan); transform: rotate(90deg); }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* View Control Buttons */
+  .viewControlButton {
+    display: none; position: absolute; bottom: 20px; left: 50%;
+    width: 44px; height: 44px; background-color: rgba(23, 42, 69, 0.8);
+    border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 18px; color: var(--brand-text-light);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  .viewControlButton:hover { background-color: var(--brand-gold); color: var(--brand-dark-blue); transform: scale(1.1); }
+  body.view-control-buttons .viewControlButton { display: flex; }
+  @media (max-width: 600px) { body.view-control-buttons .viewControlButton { display: none; } }
+  .viewControlButton-1 { margin-left: -110px; } /* Up */
+  .viewControlButton-2 { margin-left: -55px; }  /* Down */
+  .viewControlButton-3 { margin-left: 0px; }    /* Left */
+  .viewControlButton-4 { margin-left: 55px; }   /* Right */
+  
+  /* Social Media Bar */
+  #social-bar { position: absolute; bottom: 20px; left: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 1000; }
+  #social-bar a { color: var(--brand-text-dark); font-size: 24px; transition: color 0.3s ease, transform 0.3s ease; }
+  #social-bar a:hover { color: var(--brand-gold); transform: scale(1.2); }
+
+  /* Music Control Button */
+  #music-control { position: absolute; bottom: 20px; right: 20px; z-index: 1000; }
+
+</style>
+</head>
+<body class="multiple-scenes view-control-buttons">
+
+<!-- Preloader -->
+<div id="preloader">
+  <div class="loader"></div>
+  <p>Loading Virtual Tour...</p>
+</div>
+
+<!--== شعار السويدي ==-->
+<a id="company-logo" href="https://www.elsewedyelectric.com/" target="_blank">
+  <img src="company_logo.png" alt="Elsewedy Electric Logo">
+</a>
+
+<div id="pano"></div>
+
+<!-- Universal Info Modal -->
+<div id="info-modal-overlay">
+  <div id="info-modal-content">
+    <i class="fas fa-times" id="info-modal-close"></i>
+    <h3 id="info-modal-title"></h3>
+    <p id="info-modal-text"></p>
+  </div>
+</div>
+
+<!-- Social Media Bar -->
+<div id="social-bar">
+  <a href="https://www.facebook.com/ElsewedyElectric/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+  <a href="https://twitter.com/ElsewedyElec" target="_blank" title="X (Twitter)"><i class="fab fa-twitter"></i></a>
+  <a href="https://www.linkedin.com/company/elsewedy-electric" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+  <a href="https://www.elsewedyelectric.com/" target="_blank" title="Website"><i class="fas fa-globe"></i></a>
+</div>
+
+<!--== ملف الموسيقى ==-->
+<!--
+    لتغيير الموسيقى:
+    1. ضع ملف الموسيقى (مثلاً mymusic.mp3) في نفس مجلد ملف index.html
+    2. غير قيمة src في السطر التالي إلى اسم ملفك:
+       <source src="mymusic.mp3" type="audio/mpeg">
+-->
+<audio id="background-music" loop>
+  <source src="mymusic.mp3" type="audio/mpeg">
+</audio>
+<div id="music-control" class="ui-button" title="Toggle Music">
+  <i class="fas fa-volume-mute"></i>
+</div>
+<!--== شعارك الخاص (حقوق التطوير) ==-->
+<!-- غيّر "Your Name" لاسمك، وغير "#" لرابط موقعك -->
+<a id="creator-credit" href="#" target="_blank">
+  Developed by Your Name
+</a>
+<div id="sceneList">
+  <ul class="scenes">
+    <a href="javascript:void(0)" class="scene" data-id="0-img_20250911_133803_00_048"><li class="text">Aerial View</li></a>
+    <a href="javascript:void(0)" class="scene" data-id="1-"><li class="text">Main Entrance</li></a>
+    <a href="javascript:void(0)" class="scene" data-id="2-011"><li class="text">Parking Lot</li></a>
+    <a href="javascript:void(0)" class="scene" data-id="3-0"><li class="text">Side Entrance</li></a>
+    <a href="javascript:void(0)" class="scene" data-id="4-1"><li class="text">Reception Area</li></a>
+    <a href="javascript:void(0)" class="scene" data-id="5-2"><li class="text">Main Corridor</li></a>
+    <a href="javascript:void(0)" class="scene" data-id="6-3"><li class="text">Workshop Entrance</li></a>
+    <a href="javascript:void(0)" class="scene" data-id="7-5"><li class="text">Fabrication Area</li></a>
+    <a href="javascript:void(0)" class="scene" data-id="8-6"><li class="text">Assembly Line</li></a>
+    <a href="javascript:void(0)" class="scene" data-id="9-10"><li class="text">Office Hallway</li></a>
+    <a href="javascript:void(0)" class="scene" data-id="10-30"><li class="text">Logistics Bay 1</li></a>
+    <a href="javascript:void(0)" class="scene" data-id="11-31"><li class="text">Logistics Bay 2</li></a>
+    <a href="javascript:void(0)" class="scene" data-id="12-32"><li class="text">Storage Area</li></a>
+    <a href="javascript:void(0)" class="scene" data-id="13-33"><li class="text">Shipping Dock</li></a>
+  </ul>
+</div>
+
+<div id="titleBar">
+  <h1 class="sceneName"></h1>
+</div>
+
+<a href="javascript:void(0)" id="autorotateToggle" class="ui-button" title="Toggle Autorotate">
+  <i class="icon fas fa-play"></i>
+</a>
+<a href="javascript:void(0)" id="fullscreenToggle" class="ui-button" title="Toggle Fullscreen">
+  <i class="icon fas fa-expand"></i>
+</a>
+<a href="javascript:void(0)" id="sceneListToggle" class="ui-button" title="Scene List">
+  <i class="icon fas fa-bars"></i>
+</a>
+
+<a href="javascript:void(0)" id="viewUp" class="viewControlButton viewControlButton-1"><i class="fas fa-arrow-up"></i></a>
+<a href="javascript:void(0)" id="viewDown" class="viewControlButton viewControlButton-2"><i class="fas fa-arrow-down"></i></a>
+<a href="javascript:void(0)" id="viewLeft" class="viewControlButton viewControlButton-3"><i class="fas fa-arrow-left"></i></a>
+<a href="javascript:void(0)" id="viewRight" class="viewControlButton viewControlButton-4"><i class="fas fa-arrow-right"></i></a>
+
+<script src="vendor/screenfull.min.js" ></script>
+<script src="vendor/bowser.min.js" ></script>
+<script src="vendor/marzipano.js" ></script>
+
+<script>
+// Data with updated, logical English names
+var APP_DATA = {
+  "scenes": [
+    {
+      "id": "0-img_20250911_133803_00_048", "name": "Aerial View",
+      "levels": [ { "tileSize": 256, "size": 256, "fallbackOnly": true }, { "tileSize": 512, "size": 512 }, { "tileSize": 512, "size": 1024 } ],
+      "faceSize": 1024, "initialViewParameters": { "yaw": 2.6329, "pitch": 0.1729, "fov": 1.2599 },
+      "linkHotspots": [
+        { "yaw": 0.1814, "pitch": 0.0455, "rotation": 0, "target": "1-" },
+        { "yaw": -1.8585, "pitch": 0.0813, "rotation": 0, "target": "2-011" }
+      ],
+      "infoHotspots": [
+        {
+          "yaw": -0.3103, "pitch": -0.1781,
+          "title": "Welcome to Elsewedy Electric",
+          "text": "We are pioneers in energy and infrastructure solutions. Explore our virtual tour to get acquainted with our state-of-the-art facilities."
+        }
+      ]
+    },
+    {
+      "id": "1-", "name": "Main Entrance",
+      "levels": [ { "tileSize": 256, "size": 256, "fallbackOnly": true }, { "tileSize": 512, "size": 512 }, { "tileSize": 512, "size": 1024 } ],
+      "faceSize": 960, "initialViewParameters": { "pitch": 0, "yaw": 0, "fov": 1.5707 },
+      "linkHotspots": [
+        { "yaw": 1.4848, "pitch": 0.1822, "rotation": 0, "target": "0-img_20250911_133803_00_048" },
+        { "yaw": -1.7012, "pitch": 0.1318, "rotation": 0, "target": "4-1" }
+      ], "infoHotspots": []
+    },
+    { "id": "2-011", "name": "Parking Lot", "levels": [ { "tileSize": 256, "size": 256, "fallbackOnly": true }, { "tileSize": 512, "size": 512 }, { "tileSize": 512, "size": 1024 } ], "faceSize": 960, "initialViewParameters": { "pitch": 0, "yaw": 0, "fov": 1.5707 }, "linkHotspots": [ { "yaw": 3.0646, "pitch": 0.0968, "rotation": 0, "target": "0-img_20250911_133803_00_048" } ], "infoHotspots": [] },
+    { "id": "3-0", "name": "Side Entrance", "levels": [ { "tileSize": 256, "size": 256, "fallbackOnly": true }, { "tileSize": 512, "size": 512 }, { "tileSize": 512, "size": 1024 } ], "faceSize": 960, "initialViewParameters": { "pitch": 0, "yaw": 0, "fov": 1.5707 }, "linkHotspots": [ { "yaw": -0.8267, "pitch": 0.0633, "rotation": 4.7123, "target": "1-" }, { "yaw": -0.0533, "pitch": 0.0172, "rotation": 3.1415, "target": "0-img_20250911_133803_00_048" } ], "infoHotspots": [] },
+    { "id": "4-1", "name": "Reception Area", "levels": [ { "tileSize": 256, "size": 256, "fallbackOnly": true }, { "tileSize": 512, "size": 512 }, { "tileSize": 512, "size": 1024 } ], "faceSize": 960, "initialViewParameters": { "pitch": 0, "yaw": 0, "fov": 1.5707 }, "linkHotspots": [ { "yaw": -2.8175, "pitch": 0.2750, "rotation": 0, "target": "5-2" }, { "yaw": 2.6640, "pitch": 0.0778, "rotation": 4.7123, "target": "9-10" } ], "infoHotspots": [] },
+    { "id": "5-2", "name": "Main Corridor", "levels": [ { "tileSize": 256, "size": 256, "fallbackOnly": true }, { "tileSize": 512, "size": 512 }, { "tileSize": 512, "size": 1024 } ], "faceSize": 960, "initialViewParameters": { "pitch": 0, "yaw": 0, "fov": 1.5707 }, "linkHotspots": [ { "yaw": -1.2417, "pitch": 0.1507, "rotation": 0, "target": "4-1" }, { "yaw": -1.5448, "pitch": 0.1136, "rotation": 4.7123, "target": "1-" }, { "yaw": 0.7156, "pitch": 0.0420, "rotation": 3.1415, "target": "9-10" } ], "infoHotspots": [] },
+    { "id": "6-3", "name": "Workshop Entrance", "levels": [ { "tileSize": 256, "size": 256, "fallbackOnly": true }, { "tileSize": 512, "size": 512 }, { "tileSize": 512, "size": 1024 } ], "faceSize": 960, "initialViewParameters": { "pitch": 0, "yaw": 0, "fov": 1.5707 }, "linkHotspots": [ { "yaw": 1.9069, "pitch": 0.2939, "rotation": 0, "target": "5-2" }, { "yaw": 2.2504, "pitch": 0.0837, "rotation": 1.5707, "target": "1-" }, { "yaw": -1.2043, "pitch": 0.2323, "rotation": 0, "target": "7-5" } ], "infoHotspots": [] },
+    { "id": "7-5", "name": "Fabrication Area", "levels": [ { "tileSize": 256, "size": 256, "fallbackOnly": true }, { "tileSize": 512, "size": 512 }, { "tileSize": 512, "size": 1024 } ], "faceSize": 960, "initialViewParameters": { "pitch": 0, "yaw": 0, "fov": 1.5707 }, "linkHotspots": [ { "yaw": 1.5502, "pitch": 0.1625, "rotation": 0, "target": "6-3" }, { "yaw": -1.4454, "pitch": 0.0943, "rotation": 7.8539, "target": "8-6" } ], "infoHotspots": [] },
+    { "id": "8-6", "name": "Assembly Line", "levels": [ { "tileSize": 256, "size": 256, "fallbackOnly": true }, { "tileSize": 512, "size": 512 }, { "tileSize": 512, "size": 1024 } ], "faceSize": 960, "initialViewParameters": { "pitch": 0, "yaw": 0, "fov": 1.5707 }, "linkHotspots": [ { "yaw": -0.0091, "pitch": 0.1460, "rotation": 4.7123, "target": "7-5" } ], "infoHotspots": [] },
+    { "id": "9-10", "name": "Office Hallway", "levels": [ { "tileSize": 256, "size": 256, "fallbackOnly": true }, { "tileSize": 512, "size": 512 }, { "tileSize": 512, "size": 1024 } ], "faceSize": 960, "initialViewParameters": { "pitch": 0, "yaw": 0, "fov": 1.5707 }, "linkHotspots": [ { "yaw": -2.2614, "pitch": -0.0034, "rotation": 3.1415, "target": "5-2" } ], "infoHotspots": [] },
+    { "id": "10-30", "name": "Logistics Bay 1", "levels": [ { "tileSize": 256, "size": 256, "fallbackOnly": true }, { "tileSize": 512, "size": 512 }, { "tileSize": 512, "size": 1024 } ], "faceSize": 960, "initialViewParameters": { "pitch": 0, "yaw": 0, "fov": 1.5707 }, "linkHotspots": [ { "yaw": -1.6997, "pitch": 0.3148, "rotation": 0, "target": "11-31" }, { "yaw": 2.0536, "pitch": 0.3630, "rotation": 0, "target": "13-33" } ], "infoHotspots": [] },
+    { "id": "11-31", "name": "Logistics Bay 2", "levels": [ { "tileSize": 256, "size": 256, "fallbackOnly": true }, { "tileSize": 512, "size": 512 }, { "tileSize": 512, "size": 1024 } ], "faceSize": 960, "initialViewParameters": { "pitch": 0, "yaw": 0, "fov": 1.5707 }, "linkHotspots": [ { "yaw": 0.0998, "pitch": 0.3039, "rotation": 0, "target": "10-30" }, { "yaw": 2.6607, "pitch": 0.0590, "rotation": 5.4977, "target": "12-32" }, { "yaw": -2.6224, "pitch": 0.0614, "rotation": 0.7853, "target": "13-33" } ], "infoHotspots": [] },
+    { "id": "12-32", "name": "Storage Area", "levels": [ { "tileSize": 256, "size": 256, "fallbackOnly": true }, { "tileSize": 512, "size": 512 }, { "tileSize": 512, "size": 1024 } ], "faceSize": 960, "initialViewParameters": { "pitch": 0, "yaw": 0, "fov": 1.5707 }, "linkHotspots": [ { "yaw": 2.3687, "pitch": 0.2703, "rotation": 7.0685, "target": "11-31" }, { "yaw": 3.0072, "pitch": 0.0609, "rotation": 13.3517, "target": "10-30" } ], "infoHotspots": [] },
+    { "id": "13-33", "name": "Shipping Dock", "levels": [ { "tileSize": 256, "size": 256, "fallbackOnly": true }, { "tileSize": 512, "size": 512 }, { "tileSize": 512, "size": 1024 } ], "faceSize": 960, "initialViewParameters": { "pitch": 0, "yaw": 0, "fov": 1.5707 }, "linkHotspots": [ { "yaw": -2.6170, "pitch": 0.3399, "rotation": 6.2831, "target": "10-30" } ], "infoHotspots": [] }
+  ],
+  "name": "Project Title", "settings": { "mouseViewMode": "drag", "autorotateEnabled": true, "fullscreenButton": true, "viewControlButtons": true }
+};
+</script>
+<script>
+'use strict';
+(function() {
+  var Marzipano = window.Marzipano;
+  var bowser = window.bowser;
+  var screenfull = window.screenfull;
+  var data = window.APP_DATA;
+
+  window.addEventListener('load', function() {
+    var preloader = document.getElementById('preloader');
+    preloader.style.opacity = '0';
+    setTimeout(function() { preloader.style.display = 'none'; }, 500);
+  });
+
+  var panoElement = document.querySelector('#pano');
+  var sceneNameElement = document.querySelector('#titleBar .sceneName');
+  var sceneListElement = document.querySelector('#sceneList');
+  var sceneElements = document.querySelectorAll('#sceneList .scene');
+  var sceneListToggleElement = document.querySelector('#sceneListToggle');
+  var autorotateToggleElement = document.querySelector('#autorotateToggle');
+  var fullscreenToggleElement = document.querySelector('#fullscreenToggle');
+  
+  var musicControlElement = document.querySelector('#music-control');
+  var backgroundMusicElement = document.querySelector('#background-music');
+  var isMusicPlaying = false;
+  
+  // -- NEW: Modal elements --
+  var infoModalOverlay = document.getElementById('info-modal-overlay');
+  var infoModalTitle = document.getElementById('info-modal-title');
+  var infoModalText = document.getElementById('info-modal-text');
+  var infoModalClose = document.getElementById('info-modal-close');
+
+  if (window.matchMedia) {
+    var setMode = function() {
+      var mql = matchMedia("(max-width: 500px), (max-height: 500px)");
+      if (mql.matches) { document.body.classList.add('mobile'); document.body.classList.remove('desktop'); } 
+      else { document.body.classList.add('desktop'); document.body.classList.remove('mobile'); }
+    };
+    setMode();
+    window.addEventListener('resize', setMode);
+  } else { document.body.classList.add('desktop'); }
+
+  document.body.classList.add('no-touch');
+  window.addEventListener('touchstart', function() { document.body.classList.add('touch'); document.body.classList.remove('no-touch'); });
+
+  if (bowser.msie && parseFloat(bowser.version) < 11) { document.body.classList.add('tooltip-fallback'); }
+
+  var viewer = new Marzipano.Viewer(panoElement, { controls: { mouseViewMode: data.settings.mouseViewMode } });
+
+  var scenes = data.scenes.map(function(data) {
+    var source = Marzipano.ImageUrlSource.fromString("tiles/" + data.id + "/{z}/{f}/{y}/{x}.jpg", { cubeMapPreviewUrl: "tiles/" + data.id + "/preview.jpg" });
+    var geometry = new Marzipano.CubeGeometry(data.levels);
+    var limiter = Marzipano.RectilinearView.limit.traditional(data.faceSize, 100*Math.PI/180, 120*Math.PI/180);
+    var view = new Marzipano.RectilinearView(data.initialViewParameters, limiter);
+    var scene = viewer.createScene({ source: source, geometry: geometry, view: view, pinFirstLevel: true });
+
+    data.linkHotspots.forEach(function(hotspot) {
+      var element = createLinkHotspotElement(hotspot);
+      scene.hotspotContainer().createHotspot(element, { yaw: hotspot.yaw, pitch: hotspot.pitch });
+    });
+    data.infoHotspots.forEach(function(hotspot) {
+      var element = createInfoHotspotElement(hotspot);
+      scene.hotspotContainer().createHotspot(element, { yaw: hotspot.yaw, pitch: hotspot.pitch });
+    });
+    return { data: data, scene: scene, view: view };
+  });
+
+  var autorotate = Marzipano.autorotate({ yawSpeed: 0.03, targetPitch: 0, targetFov: Math.PI/2 });
+  if (data.settings.autorotateEnabled) {
+    autorotateToggleElement.classList.add('enabled');
+    autorotateToggleElement.querySelector('.icon').classList.replace('fa-play', 'fa-pause');
+  }
+  autorotateToggleElement.addEventListener('click', toggleAutorotate);
+
+  if (screenfull.enabled && data.settings.fullscreenButton) {
+    document.body.classList.add('fullscreen-enabled');
+    fullscreenToggleElement.addEventListener('click', function() { screenfull.toggle(); });
+    screenfull.on('change', function() {
+      var icon = fullscreenToggleElement.querySelector('.icon');
+      if (screenfull.isFullscreen) { icon.classList.replace('fa-expand', 'fa-compress'); } 
+      else { icon.classList.replace('fa-compress', 'fa-expand'); }
+    });
+  }
+
+  sceneListToggleElement.addEventListener('click', toggleSceneList);
+  if (!document.body.classList.contains('mobile')) { showSceneList(); }
+
+  scenes.forEach(function(scene) {
+    var el = document.querySelector('#sceneList .scene[data-id="' + scene.data.id + '"]');
+    el.addEventListener('click', function() {
+      switchScene(scene);
+      if (document.body.classList.contains('mobile')) { hideSceneList(); }
+    });
+  });
+
+  musicControlElement.addEventListener('click', toggleMusic);
+  document.body.addEventListener('click', function() { if (!isMusicPlaying && backgroundMusicElement.paused) { toggleMusic(); } }, { once: true });
+
+  var controls = viewer.controls();
+  var velocity = 0.7, friction = 3;
+  controls.registerMethod('upElement',    new Marzipano.ElementPressControlMethod(document.querySelector('#viewUp'), 'y', -velocity, friction), true);
+  controls.registerMethod('downElement',  new Marzipano.ElementPressControlMethod(document.querySelector('#viewDown'), 'y',  velocity, friction), true);
+  controls.registerMethod('leftElement',  new Marzipano.ElementPressControlMethod(document.querySelector('#viewLeft'), 'x', -velocity, friction), true);
+  controls.registerMethod('rightElement', new Marzipano.ElementPressControlMethod(document.querySelector('#viewRight'), 'x',  velocity, friction), true);
+
+
+
+  function sanitize(s) { return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'); }
+  function switchScene(scene) {
+    stopAutorotate();
+    scene.view.setParameters(scene.data.initialViewParameters);
+    scene.scene.switchTo();
+    startAutorotate();
+    updateSceneName(scene);
+    updateSceneList(scene);
+  }
+  function updateSceneName(scene) { sceneNameElement.innerHTML = sanitize(scene.data.name); }
+  function updateSceneList(scene) {
+    sceneElements.forEach(el => el.classList.toggle('current', el.getAttribute('data-id') === scene.data.id));
+  }
+  function showSceneList() { sceneListElement.classList.add('enabled'); sceneListToggleElement.classList.add('enabled'); }
+  function hideSceneList() { sceneListElement.classList.remove('enabled'); sceneListToggleElement.classList.remove('enabled'); }
+  function toggleSceneList() { sceneListElement.classList.toggle('enabled'); sceneListToggleElement.classList.toggle('enabled'); }
+  function startAutorotate() { if (autorotateToggleElement.classList.contains('enabled')) { viewer.startMovement(autorotate); viewer.setIdleMovement(3000, autorotate); } }
+  function stopAutorotate() { viewer.stopMovement(); viewer.setIdleMovement(Infinity); }
+  function toggleAutorotate() {
+    var icon = autorotateToggleElement.querySelector('.icon');
+    if (autorotateToggleElement.classList.toggle('enabled')) {
+      icon.classList.replace('fa-play', 'fa-pause'); startAutorotate();
+    } else {
+      icon.classList.replace('fa-pause', 'fa-play'); stopAutorotate();
+    }
+  }
+  function toggleMusic() {
+    var icon = musicControlElement.querySelector('i');
+    if (isMusicPlaying) {
+      backgroundMusicElement.pause(); icon.classList.replace('fa-volume-up', 'fa-volume-mute');
+    } else {
+      backgroundMusicElement.play().catch(e => console.log("Autoplay prevented")); icon.classList.replace('fa-volume-mute', 'fa-volume-up');
+    }
+    isMusicPlaying = !isMusicPlaying;
+  }
+  backgroundMusicElement.addEventListener('play', () => { isMusicPlaying = true; musicControlElement.querySelector('i').classList.replace('fa-volume-mute', 'fa-volume-up'); });
+  backgroundMusicElement.addEventListener('pause', () => { isMusicPlaying = false; musicControlElement.querySelector('i').classList.replace('fa-volume-up', 'fa-volume-mute'); });
+
+  function createLinkHotspotElement(hotspot) {
+    var wrapper = document.createElement('div'); wrapper.className = 'hotspot link-hotspot';
+    var iconWrapper = document.createElement('div'); iconWrapper.className = 'icon-wrapper';
+    var icon = document.createElement('i'); icon.className = 'fas fa-chevron-down'; // UPDATED ICON
+    iconWrapper.appendChild(icon);
+    wrapper.addEventListener('click', () => switchScene(findSceneById(hotspot.target)));
+    stopTouchAndScrollEventPropagation(wrapper);
+    var tooltip = document.createElement('div'); tooltip.className = 'hotspot-tooltip link-hotspot-tooltip';
+    tooltip.innerHTML = findSceneDataById(hotspot.target).name;
+    wrapper.appendChild(iconWrapper); wrapper.appendChild(tooltip);
+    return wrapper;
+  }
+
+  // -- UPDATED: Info Hotspot now triggers the universal modal --
+  function createInfoHotspotElement(hotspot) {
+    var wrapper = document.createElement('div'); wrapper.className = 'hotspot info-hotspot';
+    var iconWrapper = document.createElement('div'); iconWrapper.className = 'icon-wrapper';
+    var icon = document.createElement('i'); icon.className = 'fas fa-info';
+    iconWrapper.appendChild(icon);
+    wrapper.appendChild(iconWrapper);
+    wrapper.addEventListener('click', function() {
+      infoModalTitle.innerHTML = hotspot.title;
+      infoModalText.innerHTML = hotspot.text;
+      infoModalOverlay.style.display = 'flex';
+    });
+    stopTouchAndScrollEventPropagation(wrapper);
+    return wrapper;
+  }
+  infoModalClose.addEventListener('click', () => infoModalOverlay.style.display = 'none');
+  infoModalOverlay.addEventListener('click', (e) => { if(e.target === infoModalOverlay) { infoModalOverlay.style.display = 'none'; }});
+
+  function stopTouchAndScrollEventPropagation(element) {
+    ['touchstart', 'touchmove', 'touchend', 'touchcancel', 'wheel', 'mousewheel'].forEach(evt => {
+      element.addEventListener(evt, e => e.stopPropagation());
+    });
+  }
+
+  function findSceneById(id) { return scenes.find(s => s.data.id === id) || null; }
+  function findSceneDataById(id) { return data.scenes.find(s => s.id === id) || null; }
+  switchScene(scenes[0]);
+})();
+</script>
+
+</body>
+</html>

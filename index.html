@@ -80,7 +80,7 @@
   #preloader {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background-color: var(--brand-dark-blue); z-index: 99999;
-    display: flex; justify-content: center; align-items: center; flex-direction: column;
+    display: none; justify-content: center; align-items: center; flex-direction: column;
     transition: opacity 0.5s ease;
   }
   #preloader .loader {
@@ -90,8 +90,11 @@
   #preloader p { color: var(--brand-text-light); margin-top: 20px; font-size: 1.2em; }
   @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-  #pano { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
-
+#pano { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden;
+    background-color: var(--brand-dark-blue); /* <-- أضف هذا السطر */
+  }
+  
   #creator-credit {
   position: absolute;
   bottom: 25px;
@@ -269,23 +272,16 @@
   <a href="https://www.elsewedyelectric.com/" target="_blank" title="Website"><i class="fas fa-globe"></i></a>
 </div>
 
-<!--== ملف الموسيقى ==-->
-<!--
-    لتغيير الموسيقى:
-    1. ضع ملف الموسيقى (مثلاً mymusic.mp3) في نفس مجلد ملف index.html
-    2. غير قيمة src في السطر التالي إلى اسم ملفك:
-       <source src="mymusic.mp3" type="audio/mpeg">
--->
+
 <audio id="background-music" loop>
   <source src="mymusic.mp3" type="audio/mpeg">
 </audio>
 <div id="music-control" class="ui-button" title="Toggle Music">
   <i class="fas fa-volume-mute"></i>
 </div>
-<!--== شعارك الخاص (حقوق التطوير) ==-->
-<!-- غيّر "Your Name" لاسمك، وغير "#" لرابط موقعك -->
+
 <a id="creator-credit" href="#" target="_blank">
-  Developed by Your Name
+  Developed by Echo Boost
 </a>
 <div id="sceneList">
   <ul class="scenes">
@@ -382,11 +378,7 @@ var APP_DATA = {
   var screenfull = window.screenfull;
   var data = window.APP_DATA;
 
-  window.addEventListener('load', function() {
-    var preloader = document.getElementById('preloader');
-    preloader.style.opacity = '0';
-    setTimeout(function() { preloader.style.display = 'none'; }, 500);
-  });
+ 
 
   var panoElement = document.querySelector('#pano');
   var sceneNameElement = document.querySelector('#titleBar .sceneName');
